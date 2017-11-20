@@ -83,7 +83,7 @@
 			if((window.innerHeight + window.scrollY) >= document.body.scrollHeight &&
 					!pending &&
 					!scope.exceeded &&
-					(scope.error.code === 1 || scope.error.code === 2)) {
+					!(scope.error.visible && (scope.error.code === 1 || scope.error.code === 2))) {
 				pending = true;
 				getPhotos(++page);
 			}
