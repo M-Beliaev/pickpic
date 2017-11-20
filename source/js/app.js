@@ -1,4 +1,4 @@
-let config = require('../../build.config.json');
+window.config = require('../../build.config.json');
 
 import Unsplash, { toJson } from 'unsplash-js';
 // import riot from 'riot';

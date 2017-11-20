@@ -105,12 +105,15 @@
 
 		function getPageFromLS (page) {
 			return new Promise(function(resolve, reject) {
+				if(!config.LS.cache) {
+					reject();
+				}
 				let JSONData = localStorage.getItem('page_' + page);
 				if(!JSONData) {
 					reject('No data');
 				} 
 				let data = JSON.parse(JSONData);
-				if(data && new Date(data.date) < new Date(new Date().getTime() - 3e+5)) {
+				if(data && new Date(data.date) < new Date(new Date().getTime() - config.LS.term ? config.LS.term : 3e+5)) {
 					reject('Expired');
 				} else {
 					resolve(data);
