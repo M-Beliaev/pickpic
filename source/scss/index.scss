@@ -1,0 +1,28 @@
+// materialize components
+
+@charset "UTF-8";
+
+// Colors
+@import "../../bower_components/materialize/sass/components/color";
+
+// Variables;
+@import "../../bower_components/materialize/sass/components/variables";
+
+// Reset
+@import "../../bower_components/materialize/sass/components/normalize";
+
+@import "../../bower_components/materialize/sass/components/global";
+@import "../../bower_components/materialize/sass/components/icons-material-design";
+@import "../../bower_components/materialize/sass/components/grid";
+@import "../../bower_components/materialize/sass/components/cards";
+@import "../../bower_components/materialize/sass/components/typography";
+@import "../../bower_components/materialize/sass/components/transitions";
+@import "../../bower_components/materialize/sass/components/preloader";
+@import "../../bower_components/materialize/sass/components/date_picker/default";
+@import "../../bower_components/materialize/sass/components/date_picker/default.date";
+@import "../../bower_components/materialize/sass/components/date_picker/default.time";
+
+
+.some_class {
+	background:transparent url('image.png') left top no-repeat;
+}

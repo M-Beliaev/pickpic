@@ -1,0 +1,21 @@
+{
+  "name": "pics",
+  "description": "Test app",
+  "main": "gulpfile.js",
+  "authors": [
+    "Mikhail Beliaev"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.100.2"
+  }
+}

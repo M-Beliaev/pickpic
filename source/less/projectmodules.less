@@ -1,0 +1,153 @@
+.app-header {
+	display: block;
+	h2 {
+		font-family: 'Playfair Display', serif;
+	}
+	&__center {
+		text-align: center;
+	}
+	.description {
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-size: 18px;
+		margin-bottom: 30px;
+	}
+}
+
+
+
+@keyframes zrotate {
+	from {
+		.perspective(500px; -40deg);
+		opacity: 0;
+	}
+	to {
+		-webkit-transform: perspective(500px) rotateX(0deg);
+		-moz-transform: perspective(500px) rotateX(0deg);
+		transform: perspective(500px) rotateX(0deg);
+		opacity: 1;
+	}
+}
+
+
+.pic-list {
+
+	display: block;
+	.pic {
+		margin-bottom: 22px;
+		position: relative;
+		display: block;
+		-webkit-transform-origin: top center;
+		-moz-transform-origin: top center;
+		transform-origin: top center;
+		animation: zrotate 100ms linear;
+		cursor: pointer;
+		&__inner {
+			display: block;
+			overflow: hidden;
+			position: relative;
+			img {
+				opacity: 0;
+				width: 1px;
+				height: 1px;
+			}
+			.cover {
+				position: absolute;
+				color: #fff;
+				opacity: 0;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				background-color: rgba(0, 0, 0, 0.3);
+				transition: opacity 0.25s ease;
+				.search-icon {
+					position: absolute;
+					margin: auto;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					font-size: 40px;
+					width: 40px;
+					height: 40px;
+				}
+			}
+			.pic__img {
+				opacity: 0;
+				position: absolute;
+				margin: auto;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				transform: scale(1.1, 1.1);
+				-webkit-transform: scale(1.1, 1.1);
+				transition: all 0.35s ease;
+			}
+			&.loaded {
+				.pic__img {
+					opacity: 1;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					transform: scale(1, 1);
+					-webkit-transform: scale(1, 1);
+				}
+			}
+			&.loaded:hover {
+				.pic__img {
+					transform: scale(1.1, 1.1);
+					-webkit-transform: scale(1.1, 1.1);
+				}
+				.cover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+	&--inner {
+	}
+}
+
+
+.loader--outer {
+	padding: 50px;
+	position: relative;
+	.loader {
+		position: absolute;
+		margin: auto;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 37px;
+		height: 37px;
+		.spinner-black-only {
+			border-color: #000;
+		} 
+	}
+}
+
+.rate-limit {
+	-webkit-transform-origin: top center;
+	-moz-transform-origin: top center;
+	transform-origin: top center;
+	animation: zrotate 100ms linear;
+	color: #fff;
+	.card-image {
+		height: 200px;
+		.lock-sign {
+			position: absolute;
+			margin: auto;
+			height: 130px;
+			width: 130px;
+			font-size: 130px;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			top: 0;
+		}
+	}
+}
