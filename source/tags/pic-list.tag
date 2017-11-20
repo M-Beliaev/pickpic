@@ -20,13 +20,13 @@
 	<div class="loader--outer">
 		<loader if="{ showLoader }"></loader>
 	</div>
-	<div if="{ exceeded }" class="card rate-limit">
+	<div if="{ error.visible }" class="card rate-limit">
 		<div class="card-image grey darken-3">
           <i class="material-icons lock-sign">lock</i>
           <span class="card-title">Sorry!</span>
         </div>
 		<div class="card-content grey darken-4 black">
-			API Rate Limit Exceeded. Try to get back within 1 hour
+			{ error.message }
 		</div>
 	</div>
 	<script>
@@ -55,10 +55,35 @@
 		scope.showLoader = false;
 		scope.exceeded = false;
 
+		scope.error = {
+			messages: [
+				'Something went wrong :(',
+				'API Rate Limit Exceeded. Try to get back within 1 hour',
+				'API service does not recognize your credentials'
+			],
+			code: 0,
+			message: '',
+			visible: false,
+			show: (errorCode) => {
+				scope.error.code = errorCode;
+				scope.error.message = scope.error.messages[errorCode];
+				scope.error.visible = true;
+
+			},
+			hide: () => {
+				scope.error.visible = false;
+				scope.error.code = 0;
+				scope.error.message = '';
+			}
+		};
+
 		getPhotos(page);
 
 		document.addEventListener('scroll', function(ev) {
-			if((window.innerHeight + window.scrollY) >= document.body.scrollHeight && !pending && !scope.exceeded) {
+			if((window.innerHeight + window.scrollY) >= document.body.scrollHeight &&
+					!pending &&
+					!scope.exceeded &&
+					(scope.error.code === 1 || scope.error.code === 2)) {
 				pending = true;
 				getPhotos(++page);
 			}
@@ -67,6 +92,7 @@
 
 		function getPhotos(page) {
 			loader.show();
+			scope.error.hide();
 			getPageFromLS(page).then(function(data) {
 				scope.photos = scope.photos.concat(data.data);
 				sortPhotos(data.data);
@@ -75,11 +101,13 @@
 				pending = false;
 				console.log('fropm LS');
 			}).catch(function(error) {
-				// console.log(error);
 				unsplash.photos.listPhotos(page, 9, "latest")
 					.then(unsplash.toJson)
 					.then(response => {
-						if(response.length) {
+						if(response.status && response.status === 401) {
+							scope.error.show(2);
+						} else if(response.length) {
+							console.log(response);
 							scope.photos = scope.photos.concat(response);
 							localStorage.setItem(
 								'page_' + page,
@@ -87,17 +115,16 @@
 							);
 							sortPhotos(response);
 							console.log('from API');
-							loader.hide();
-							scope.update();
 						}
+						loader.hide();
 						pending = false;
-				}).catch((error) => {
-					// console.log(error);
-					scope.exceeded = true;
-					loader.hide();
-					pending = false;
-					scope.update();
-				});
+						scope.update();
+					}).catch(error => {
+						scope.error.show(1);
+						loader.hide();
+						pending = false;
+						scope.update();
+					});
 			});
 
 		}
